@@ -402,6 +402,9 @@ fn setup_logging_channel(
 ) -> anyhow::Result<UpChannel> {
     const NUM_RETRIES: usize = 10; // picked at random, increase if necessary
 
+    // Sleep a bit to make sure target initializes RTT
+    std::thread::sleep(std::time::Duration::from_millis(50));
+
     let scan_region = ScanRegion::Exact(rtt_buffer_address);
     for _ in 0..NUM_RETRIES {
         match Rtt::attach_region(core, memory_map, &scan_region) {
@@ -418,6 +421,10 @@ fn setup_logging_channel(
 
             Err(probe_rs_rtt::Error::ControlBlockNotFound) => {
                 log::trace!("Could not attach because the target's RTT control block isn't initialized (yet). retrying");
+            }
+
+            Err(probe_rs_rtt::Error::ControlBlockCorrupted(reason)) => {
+                log::trace!("Could not attach because the target's RTT control block is corrupted, maybe because it is not initialized properly yet (Reason: {}). retrying", reason);
             }
 
             Err(e) => {

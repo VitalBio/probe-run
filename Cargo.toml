@@ -11,12 +11,7 @@ repository = "https://github.com/knurling-rs/probe-run"
 version = "0.3.4"
 
 [dependencies]
-addr2line = { version = "0.18", default-features = false, features = [
-    "fallible-iterator",
-    "std-object",
-    "rustc-demangle",
-    "cpp_demangle",
-] }
+addr2line = { version = "0.18", default-features = false, features = ["fallible-iterator", "std-object", "rustc-demangle", "cpp_demangle"] }
 anyhow = "1"
 colored = "2"
 defmt-decoder = { version = "=0.3.3", features = ["unstable"] }
@@ -38,3 +33,7 @@ pretty_assertions = "1"
 rstest = { version = "0.15", default-features = false }
 nix = "0.24"
 serial_test = { version = "0.9", default-features = false }
+
+[patch.crates-io]
+# probe-rs = { path = "../probe-rs/probe-rs" }
+probe-rs = { git = "https://github.com/VitalBio/probe-rs.git" }
