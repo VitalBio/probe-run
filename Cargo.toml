@@ -36,4 +36,4 @@ serial_test = { version = "0.9", default-features = false }
 
 [patch.crates-io]
 # probe-rs = { path = "../probe-rs/probe-rs" }
-probe-rs = { git = "https://github.com/VitalBio/probe-rs.git" }
+probe-rs = { git = "https://github.com/VitalBio/probe-rs.git", branch = "samda1" }
